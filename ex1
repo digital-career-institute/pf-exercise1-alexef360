@@ -1,0 +1,39 @@
+use exercises;
+CREATE TABLE Departments (
+    departmentId INT AUTO_INCREMENT PRIMARY KEY,
+    departmentName VARCHAR(100) NOT NULL,
+    location VARCHAR(100)
+);
+CREATE TABLE Employees (
+    employeeId INT AUTO_INCREMENT PRIMARY KEY,
+    employeeName VARCHAR(100) NOT NULL,
+    departmentId INT,
+    FOREIGN KEY (departmentId)
+        REFERENCES Departments (departmentId)
+);
+describe Employees;
+insert into Departments values (1, 'IT', 'LA'), (2,'HR', 'New York');
+SELECT 
+    *
+FROM
+    Departments;
+insert into Employees values (106, 'David Wilson', 1), (107, 'Michael Brown', 2);
+insert into Employees (employeeName) values ('Bob Smith');
+UPDATE Employees 
+SET 
+    departmentId = (SELECT 
+            departmentId
+        FROM
+            Departments
+        WHERE
+            departmentName = 'IT')
+WHERE
+    employeeId = 108;
+UPDATE Departments 
+SET 
+    location = 'Chicago'
+WHERE
+    departmentId = 2;
+DELETE FROM Employees 
+WHERE
+    employeeId = 107;
